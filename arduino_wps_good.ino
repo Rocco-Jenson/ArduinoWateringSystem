@@ -8,26 +8,18 @@
 #define RELAY_ON LOW    /*(Normally Open Used)*/
 #define RELAY_OFF HIGH
 
-void setup() {
-  if (Serial) {
-    Serial.begin(9600);
+void flash() {
+  for (int i = 0; i < 3; i++) {
+    digitalWrite(LED, HIGH);
+    delay(250);
+    digitalWrite(LED, LOW);
+    delay(250);
   }
-  pinMode(RELAY_1_DIGITAL_PIN, OUTPUT);
-  pinMode(RELAY_2_DIGITAL_PIN, OUTPUT);
-  digitalWrite(RELAY_1_DIGITAL_PIN, RELAY_OFF);
-  digitalWrite(RELAY_2_DIGITAL_PIN, RELAY_OFF);
-  pinMode(MS_2_ANALOG_READ_PIN, INPUT);
-  pinMode(LED, OUTPUT);
-  delay(5000);
 }
 
-void loop() {
-  const char* analog_1 = "A0";
-  const char* analog_2 = "A1";
-  int soilMoistureVal1 = read_map_print(analog_1);
-  int soilMoistureVal2 = read_map_print(analog_2);
-  test_sensor(soilMoistureVal1, RELAY_1_DIGITAL_PIN);
-  test_sensor(soilMoistureVal2, RELAY_2_DIGITAL_PIN);
+void mask_flash() {
+  digitalWrite(LED, HIGH);
+  delay(1500);
 }
 
 int read_map_print(const char* pin_value) {
@@ -51,16 +43,24 @@ void test_sensor(int soilMoisturePercent, int relay_pin) {
   }
 }
 
-void flash() {
-  for (int i = 0; i < 3; i++) {
-    digitalWrite(LED, HIGH);
-    delay(250);
-    digitalWrite(LED, LOW);
-    delay(250);
+void setup() {
+  if (Serial) {
+    Serial.begin(9600);
   }
+  pinMode(RELAY_1_DIGITAL_PIN, OUTPUT);
+  pinMode(RELAY_2_DIGITAL_PIN, OUTPUT);
+  digitalWrite(RELAY_1_DIGITAL_PIN, RELAY_OFF);
+  digitalWrite(RELAY_2_DIGITAL_PIN, RELAY_OFF);
+  pinMode(MS_2_ANALOG_READ_PIN, INPUT);
+  pinMode(LED, OUTPUT);
+  delay(5000);
 }
 
-void mask_flash() {
-  digitalWrite(LED, HIGH);
-  delay(1500);
+void loop() {
+  const char* analog_1 = "A0";
+  const char* analog_2 = "A1";
+  int soilMoistureVal1 = read_map_print(analog_1);
+  int soilMoistureVal2 = read_map_print(analog_2);
+  test_sensor(soilMoistureVal1, RELAY_1_DIGITAL_PIN);
+  test_sensor(soilMoistureVal2, RELAY_2_DIGITAL_PIN);
 }
