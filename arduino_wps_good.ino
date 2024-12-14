@@ -63,4 +63,6 @@ void loop() {
   int soilMoistureVal2 = read_map_print(analog_2);
   test_sensor(soilMoistureVal1, RELAY_1_DIGITAL_PIN);
   test_sensor(soilMoistureVal2, RELAY_2_DIGITAL_PIN);
+
+  delay(2500); // Check only after 2.5 seconds
 }
